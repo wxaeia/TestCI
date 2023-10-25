@@ -28,16 +28,28 @@ jobs:
         ls -la
         bash git_update.sh -v major
 
-    - name: AWS CloudFormation "Deploy CloudFormation Stack" Action for GitHub Actions
+    # - name: AWS CloudFormation "Deploy CloudFormation Stack" Action for GitHub Actions
+    #   # You may pin to the exact commit or the version.
+    #   # uses: aws-actions/aws-cloudformation-github-deploy@e675be17f6d393aacca6f94986bc6560de5aedd0
+    #   uses: aws-actions/aws-cloudformation-github-deploy@v1.2.0
+    #   with:
+    #     # The name of the CloudFormation stack
+    #     name: TestStackFromGithubActions
+    #     # The path or URL to the CloudFormation template
+    #     template: infra.yml
+    #     # The comma-delimited list of stack template capabilities to acknowledge. Defaults to 'CAPABILITY_IAM'
+
+    - name: CloudFormation Deploy
       # You may pin to the exact commit or the version.
-      # uses: aws-actions/aws-cloudformation-github-deploy@e675be17f6d393aacca6f94986bc6560de5aedd0
-      uses: aws-actions/aws-cloudformation-github-deploy@v1.2.0
+      # uses: cosq-network/aws-cloudformation-deploy@e0051bdba1cc2fc6a9681b67dd6dccddf8f251d0
+      uses: cosq-network/aws-cloudformation-deploy@v1.2.0
       with:
-        # The name of the CloudFormation stack
-        name: TestStackFromGithubActions
-        # The path or URL to the CloudFormation template
-        template: infra.yml
-        # The comma-delimited list of stack template capabilities to acknowledge. Defaults to 'CAPABILITY_IAM'
+        # Name of the stack to be passed to the --stack-name argument of the AWS CLI
+        stackName: TestStackFromGithubActions
+        # Path to the template file to be passed to the --template-file argument of the AWS CLI
+        templateFile: infra.yml
+        # Determines whether to pass CAPABILITY_IAM as a capability
+    
     - name: Build, Tag, and Push the Image to Amazon ECR
       id: build-image
       env:
