@@ -1,17 +1,17 @@
 AWSTemplateFormatVersion: "2010-09-09"
 Description: A sample template for ECR
 Resources:
-codefromgithubrepo:
-  Type: AWS::ECR::Repository
-  Properties:
-    RepositoryPolicyText:
-      Version: 2012-10-17
-      Statement:
-        - Action:
-            - ecr:*
-          Sid: AllowAll
-          Effect: Allow
-          Principal:
-            AWS:
-              - arn:aws:iam::301934693512:root
-    RepositoryName: codefromgithub
+  codefromgithubrepo:
+    Type: AWS::ECR::Repository
+    Properties:
+      RepositoryPolicyText:
+        Version: 2012-10-17
+        Statement:
+          - Action:
+              - ecr:*
+            Sid: AllowAll
+            Effect: Allow
+            Principal:
+              AWS:
+                - arn:aws:iam::301934693512:root
+      RepositoryName: codefromgithub
