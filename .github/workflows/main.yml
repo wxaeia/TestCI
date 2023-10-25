@@ -28,12 +28,23 @@ jobs:
         ls -la
         bash git_update.sh -v major
 
+    - name: AWS CloudFormation "Deploy CloudFormation Stack" Action for GitHub Actions
+      # You may pin to the exact commit or the version.
+      # uses: aws-actions/aws-cloudformation-github-deploy@e675be17f6d393aacca6f94986bc6560de5aedd0
+      uses: aws-actions/aws-cloudformation-github-deploy@v1.2.0
+      with:
+        # The name of the CloudFormation stack
+        name: TestStackFromGithubActions
+        # The path or URL to the CloudFormation template
+        template: infra.yml
+        # The comma-delimited list of stack template capabilities to acknowledge. Defaults to 'CAPABILITY_IAM'
     - name: Build, Tag, and Push the Image to Amazon ECR
       id: build-image
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         ECR_REPOSITORY: codefromgithub
-        IMAGE_TAG: ${{ steps.increment-git-tag.outputs.git-tag }}
+        # IMAGE_TAG: ${{ steps.increment-git-tag.outputs.git-tag }}
+        IMAGE_TAG: latest
       run: |
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
